@@ -16,10 +16,29 @@ Including another URLconf
 """
 from django.urls import path
 from api.views import account,demo,jsonList
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+# 自动化文档
+schema_view = get_schema_view(
+    openapi.Info(
+        title="接口文档",# 必传
+        default_version='v1',# 必传
+        description="接口文档",
+        terms_of_service="",
+        contact=openapi.Contact(email="yeyiteng@163.com"),
+        license=openapi.License(name="BSD License")
+    ),
+    public=True,
+)
 
 urlpatterns = [
     path('api/login/', account.LoginView.as_view()),
     path('api/register/', account.RegisterView.as_view()),
     path('api/jsonList/', jsonList.jsonListView.as_view()),
+    path('api/jsonListDetail/<int:pk>/', jsonList.jsonDetailView.as_view()),
     path('api/demo/', demo.DemoView.as_view()),
+    # 自动化文档
+    path('swagger/',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
+    path('redoc/',schema_view.with_ui('redoc', cache_timeout=0),name='schema-redoc')
 ]
