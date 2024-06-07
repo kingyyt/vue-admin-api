@@ -55,6 +55,7 @@ class LoginView(GenericAPIView):
         payload = {
             "username":instance.username,
             "user_id":instance.id,
+            # 'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=1),
             'exp':datetime.datetime.utcnow()+datetime.timedelta(hours=24),
         }
         token = jwt.encode(payload=payload,key=settings.SECRET_KEY,algorithm='HS256',headers=headers)
