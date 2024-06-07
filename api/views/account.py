@@ -5,7 +5,7 @@ from rest_framework.generics import GenericAPIView
 import jwt
 import datetime
 from django.conf import settings
-from api.utils.jwt_auth import create_token
+# from api.utils.jwt_auth import create_token
 
 
 class RegisterSerializers(serializers.ModelSerializer):
