@@ -2,11 +2,11 @@
 
 #  django-admin startproject mysite
 
-#   python manage.py runserver
-#   python manage.py startapp web
+#   python3 manage.py runserver
+#   python3 manage.py startapp web
 
-#   python manage.py makemigrations
-#   python manage.py migrate 
+#   python3 manage.py makemigrations
+#   python3ß manage.py migrate 
 
 #  status
 
