@@ -37,3 +37,11 @@ class jsonDetailView(RetrieveUpdateDestroyAPIView):
         payload,token = self.request.successful_authenticator.authenticate(self.request)
         user = payload['user_id']
         return models.JsonInfo.objects.filter(user_id=user)
+
+
+class uniJsonDetailView(RetrieveUpdateDestroyAPIView):
+    authentication_classes = []
+    serializer_class=jsonListSerializers
+    def get_queryset(self):
+        id = self.kwargs['pk']
+        return models.JsonInfo.objects.filter(id=id)
