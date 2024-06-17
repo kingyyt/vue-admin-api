@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173",]
 
 ROOT_URLCONF = 'vue_admin_api.urls'
 
