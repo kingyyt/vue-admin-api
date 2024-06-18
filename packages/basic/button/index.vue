@@ -1,18 +1,22 @@
 <script lang="ts">
 export default {
-  name: '按钮',
-  id: 'button',
-  dataComponents: dataComponents
-}
+  name: "按钮",
+  id: "button",
+  // IF EDITOR
+  dataComponents: dataComponents,
+  // END EDITOR
+};
 </script>
 <script setup lang="ts">
-import dataComponents, { editorPropsData } from './data'
+//IF EDITOR
+import dataComponents, { editorPropsData } from "./data";
 defineExpose({
-  editorPropsData: editorPropsData()
-})
+  editorPropsData: editorPropsData(),
+});
+// END EDITOR
 const props = defineProps<{
-  props: any
-}>()
+  props: any;
+}>();
 </script>
 
 <template>

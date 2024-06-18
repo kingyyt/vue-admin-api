@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from api.views import account,demo,jsonList
+from api.views import account,demo,jsonList,downUniapp
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
@@ -39,6 +39,8 @@ urlpatterns = [
     path('api/jsonListDetail/<int:pk>/', jsonList.jsonDetailView.as_view()),
     path('api/demo/', demo.DemoView.as_view()),
     path('api/uni/jsonListDetail/<int:pk>/', jsonList.uniJsonDetailView.as_view()),
+    # json处理
+    path('api/buildCode/',downUniapp.downUniappView().as_view()),
     # 自动化文档
     path('swagger/',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/',schema_view.with_ui('redoc', cache_timeout=0),name='schema-redoc')
