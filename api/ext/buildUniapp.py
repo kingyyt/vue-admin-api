@@ -2,6 +2,8 @@ import shutil
 import os
 import uuid
 import re
+from api.ext.buildUniappPage import create_page
+
 def read_and_build_file(data_list):
     # 定义源文件夹的路径
     source_folder = 'buildCode/uniCodeTemplate/uni-app'
@@ -28,7 +30,10 @@ def read_and_build_file(data_list):
                 # 根据id 复制组件
                 if(item['id'].split('-')[0] == subfolder.split('/')[-2]):
                     copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
-                    
+    
+    # 创建page页面
+    create_page(data_list)
+
     return new_folder_name
 
 # 获取所有文件夹路径
