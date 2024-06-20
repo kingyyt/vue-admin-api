@@ -1,18 +1,16 @@
 template = """
 <template>
   <view class="content">
-    
+    {{ template }}
   </view>
 </template>
 """
-importData = """
-import { ref, onMounted } from 'vue'
-import { GetJsonListDetail } from '@/api/microMain/microMain'
-import type { JsonListData } from '@/api/microMain/model/microModel'"""
 script = """
 <script setup lang="ts">
+import { GetJsonListDetail } from '@/api/microMain/microMain'
+import type { JsonListData } from '@/api/microMain/model/microModel'
+{{ import }}
 
-onMounted(() => {
-})
+{{ data }}
 </script>
 """

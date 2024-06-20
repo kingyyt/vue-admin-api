@@ -6,7 +6,7 @@ from api.ext.buildUniappPage import create_page
 
 def read_and_build_file(data_list):
     # 定义源文件夹的路径
-    source_folder = 'buildCode/uniCodeTemplate/uni-app'
+    source_folder = 'buildCode/uniCodeTemplate/uni-low-code'
     folder_path = 'packages/'
 
     # 生成一个新的 UUID 作为文件夹名称的一部分
@@ -22,6 +22,7 @@ def read_and_build_file(data_list):
     shutil.copytree(source_folder, target_folder)
     
     # 根据 json id 获取组件
+    all_subfolders = []
     for item in data_list:
         if(item['id'].split('-')[0]):
             # 获取所有子文件夹
@@ -32,7 +33,7 @@ def read_and_build_file(data_list):
                     copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
     
     # 创建page页面
-    create_page(data_list)
+    create_page(data_list,all_subfolders,new_folder_name)
 
     return new_folder_name
 

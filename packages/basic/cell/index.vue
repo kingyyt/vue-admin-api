@@ -1,15 +1,17 @@
 <script lang="ts">
 export default {
-  name: '单元格',
-  id: 'cell'
-}
+  name: "单元格",
+  id: "cell",
+};
 </script>
 <script setup lang="ts">
-import { editorPropsData } from './data'
+// IF EDITOR
+import { editorPropsData } from "./data";
 
 defineExpose({
-  editorPropsData: editorPropsData().value
-})
+  editorPropsData: editorPropsData().value,
+});
+// END EDITOR
 </script>
 
 <template>
