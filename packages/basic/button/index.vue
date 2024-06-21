@@ -5,22 +5,20 @@ export default {
   // IF EDITOR
   dataComponents: dataComponents,
   // END EDITOR
+  props: ["props"],
 };
 </script>
 <script setup lang="ts">
-//IF EDITOR
+// IF EDITOR
 import dataComponents, { editorPropsData } from "./data";
 defineExpose({
   editorPropsData: editorPropsData(),
 });
 // END EDITOR
-const props = defineProps<{
-  props: any;
-}>();
 </script>
 
 <template>
   <div>
-    <van-button type="danger">{{ props.props?.defaultValue }}</van-button>
+    <van-button type="danger">{{ props.defaultValue }}</van-button>
   </div>
 </template>

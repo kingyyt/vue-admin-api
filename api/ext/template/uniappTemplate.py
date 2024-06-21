@@ -6,11 +6,22 @@ template = """
 </template>
 """
 script = """
-<script setup lang="ts">
-import { GetJsonListDetail } from '@/api/microMain/microMain'
-import type { JsonListData } from '@/api/microMain/model/microModel'
+<script>
 {{ import }}
 
-{{ data }}
+export default {
+  components: {
+    {{ components }}
+  },
+  data() {
+    return {
+      {{ data }}
+    };
+  },
+  onLoad() {},
+  methods: {},
+};
+
+
 </script>
 """

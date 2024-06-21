@@ -48,6 +48,7 @@
     "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i"
   },
   "dependencies": {
+    "@babel/runtime": "^7.24.7",
     "@dcloudio/uni-app": "^2.0.2-4010520240507001",
     "@dcloudio/uni-app-plus": "^2.0.2-4010520240507001",
     "@dcloudio/uni-h5": "^2.0.2-4010520240507001",

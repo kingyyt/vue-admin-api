@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@babel/runtime':
+        specifier: ^7.24.7
+        version: 7.24.7
       '@dcloudio/uni-app':
         specifier: ^2.0.2-4010520240507001
         version: 2.0.2-4010520240507001(@dcloudio/types@3.4.8)(@vue/composition-api@1.7.2(vue@2.6.14))
@@ -11272,7 +11275,10 @@ snapshots:
       pretty-format: 25.5.0
       throat: 5.0.0
     transitivePeerDependencies:
+      - bufferutil
+      - canvas
       - supports-color
+      - utf-8-validate
 
   jest-leak-detector@25.5.0:
     dependencies:
