@@ -1,10 +1,11 @@
 /// <reference types='@dcloudio/types' />
-import 'vue'
-
-declare module '@vue/runtime-core' {
+import Vue from 'vue'
+declare module "vue/types/options" {
   type Hooks = App.AppInstance & Page.PageInstance;
-
-  interface ComponentCustomOptions extends Hooks {
-
+  interface ComponentOptions<V extends Vue> extends Hooks {
+    /**
+     * 组件类型
+     */
+    mpType?: string;
   }
 }
