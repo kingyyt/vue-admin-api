@@ -41,6 +41,7 @@ urlpatterns = [
     path('api/uni/jsonListDetail/<int:pk>/', jsonList.uniJsonDetailView.as_view()),
     # json处理
     path('api/buildCode/',downUniapp.downUniappView().as_view()),
+    path('api/downUniappZip/',downUniapp.downUniappZipView().as_view()),
     # 自动化文档
     path('swagger/',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/',schema_view.with_ui('redoc', cache_timeout=0),name='schema-redoc')
