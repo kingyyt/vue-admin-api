@@ -14,3 +14,4 @@ class JsonInfo(models.Model):
 class BuildUniappFile(models.Model):
     id = models.AutoField(verbose_name="ID",primary_key=True)
     filename = models.CharField(verbose_name="文件名",max_length=32)
+    user_id = models.ForeignKey(verbose_name="关联用户",to="UserInfo",on_delete=models.CASCADE,null=True, blank=True)

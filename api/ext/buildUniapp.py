@@ -60,7 +60,6 @@ def copyPackage(subfolder,new_folder_name):
             content = file.read()
         processed_content = re.sub(patternScript, "\n", re.sub(pattern, "\n", content, flags=re.DOTALL), flags=re.DOTALL)
         
-        print('------------',processed_content)
         with open(f'buildCode/DoneCode/{new_folder_name}/src/{subfolder}/index.vue', "w", encoding="utf-8") as file:
             file.write(processed_content)
     

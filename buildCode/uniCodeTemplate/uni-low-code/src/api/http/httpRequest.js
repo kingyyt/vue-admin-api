@@ -2,7 +2,7 @@
 const commoneUrl = "http://localhost:8000";
 
 //get请求封装
-function getRequest(url: string, data?: any) {
+function getRequest(url, data) {
   var promise = new Promise((resolve, reject) => {
     var postData = data;
     uni.request({
@@ -29,7 +29,7 @@ function getRequest(url: string, data?: any) {
   return promise;
 }
 //post请求封装
-function postRequest(url: string, data: any) {
+function postRequest(url, data) {
   var promise = new Promise((resolve, reject) => {
     var postData = data;
     uni.request({
@@ -41,7 +41,7 @@ function postRequest(url: string, data: any) {
         "content-type": "application/json",
         token: uni.getStorageSync("token") || "",
       },
-      success: function (res: any) {
+      success: function (res) {
         if (res.code === 200 && res.code == 0) {
           resolve(res.data);
         } else {

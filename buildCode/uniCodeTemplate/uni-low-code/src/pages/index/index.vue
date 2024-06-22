@@ -9,14 +9,22 @@
 </template>
 
 <script>
+import { GetJsonListDetail } from "@/api/index";
 export default {
   data() {
     return {
       title: "Hello",
     };
   },
-  onLoad() {},
-  methods: {},
+  onLoad() {
+    this.init();
+  },
+  methods: {
+    async init() {
+      const res = await GetJsonListDetail(1);
+      console.log(res);
+    },
+  },
 };
 </script>
 
