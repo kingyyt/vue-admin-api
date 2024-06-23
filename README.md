@@ -40,3 +40,7 @@ pip3 install djangorestframework-jwt
 pip3 install django-cors-headers  
 pip3 install drf_yasg  
 pip3 install djangorestframework
+pip3 install channels
+pip3 install daphne
+
+<!-- pip3 install channels_redis -->

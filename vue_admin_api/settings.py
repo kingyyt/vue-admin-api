@@ -33,14 +33,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.staticfiles',
     'rest_framework',
     'api.apps.ApiConfig',
     'drf_yasg',
+    'channels',
     # 跨域
     'corsheaders',
 ]
+# 使用Channels作为默认后端
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
+ASGI_APPLICATION = 'vue_admin_api.asgi.application'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

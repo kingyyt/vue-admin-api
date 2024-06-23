@@ -8,6 +8,7 @@ from api.ext.auth import JwtAuthView
 import os
 import zipfile
 from django.http import FileResponse
+from channels.layers import get_channel_layer
 
 
 
@@ -60,12 +61,13 @@ class downUniappView(generics.CreateAPIView):
         user_info = models.UserInfo.objects.get(id=self.get_queryset()) 
         json_data = request.data["json"]
         # 获取请求体中的 JSON 数据
+        channel_layer = get_channel_layer()
         try:
             # 将 JSON 字符串转换为 Python 对象（列表）
             data_list = json.loads(json_data)
-            print(data_list)
+            # # 获取WebSocket的channel_layer
             # 将data_list按需求引入相应代码
-            id = read_and_build_file(data_list)
+            id = read_and_build_file(data_list,channel_layer)
 
         except json.JSONDecodeError:
             # 如果 JSON 解析失败，返回错误响应
@@ -73,5 +75,5 @@ class downUniappView(generics.CreateAPIView):
 
         instance = models.BuildUniappFile.objects.create(user_id=user_info,filename=id)
         instance.save()
-        
+
         return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":id}},status=207)

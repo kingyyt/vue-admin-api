@@ -3,16 +3,18 @@ import os
 import uuid
 import re
 from api.ext.buildUniappPage import create_page
+from asgiref.sync import async_to_sync
 
-def read_and_build_file(data_list):
+def read_and_build_file(data_list,channel_layer):
+    send_progress(channel_layer,1)
     # 定义源文件夹的路径
     source_folder = 'buildCode/uniCodeTemplate/uni-low-code'
     folder_path = 'packages/'
-
     # 生成一个新的 UUID 作为文件夹名称的一部分
     new_folder_name = f"{uuid.uuid4().hex}_uni-app"
     # 构建新的目标文件夹路径
     target_folder = os.path.join('buildCode/DoneCode', new_folder_name)
+    send_progress(channel_layer,10)
 
     # 确保目标文件夹不存在，因为 copytree() 要求目标文件夹不存在
     if os.path.exists(target_folder):
@@ -20,7 +22,8 @@ def read_and_build_file(data_list):
 
     # 复制整个文件夹
     shutil.copytree(source_folder, target_folder)
-    
+    send_progress(channel_layer,30)
+
     # 根据 json id 获取组件
     all_subfolders = []
     for item in data_list:
@@ -32,8 +35,10 @@ def read_and_build_file(data_list):
                 if(item['id'].split('-')[0] == subfolder.split('/')[-2]):
                     copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
     
+    send_progress(channel_layer,80)
     # 创建page页面
     create_page(data_list,all_subfolders,new_folder_name)
+    send_progress(channel_layer,100)
 
     return new_folder_name
 
@@ -83,3 +88,11 @@ def copy_directory_with_exclusion(src, dst):
         elif os.path.isdir(src_item_path):
             copy_directory_with_exclusion(src_item_path, dst_item_path, exclude_files)
 
+# 按步骤传递进度
+def send_progress(channel_layer, progress):
+    async_to_sync(channel_layer.group_send)(
+        'build_uniapp_file', {
+                'type': 'send_progress',
+                'progress': progress
+            }
+    )
