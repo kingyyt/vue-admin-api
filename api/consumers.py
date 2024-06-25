@@ -5,8 +5,6 @@ import json
 class BuildUniappFileConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         print("connect")
-        print("connect")
-        print("connect")
         await self.accept()
         await self.channel_layer.group_add('build_uniapp_file', self.channel_name)
 
