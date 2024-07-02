@@ -10,6 +10,7 @@ class JsonInfo(models.Model):
     name = models.CharField(verbose_name="页面名称",max_length=32,blank=False)
     json = models.TextField(verbose_name="页面JSON")
     user_id = models.ForeignKey(verbose_name="关联用户",to="UserInfo",on_delete=models.CASCADE,null=True, blank=True)
+    tabbrs = models.TextField(verbose_name="tabbars",blank=True)
 
 class BuildUniappFile(models.Model):
     id = models.AutoField(verbose_name="ID",primary_key=True)
