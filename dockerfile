@@ -6,7 +6,7 @@ WORKDIR /app
 
 # 将当前目录的内容复制到容器的/app目录下
 COPY . /app
-
+RUN pip install --upgrade pip
 # 安装依赖
 RUN pip install -r requirements.txt
 
