@@ -11,9 +11,9 @@ WORKDIR /app
  
 # 安装依赖
 COPY requirements.txt /app/
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
- 
+#配置安装依赖
+RUN python -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 # 复制Django项目到工作目录
 COPY . /app/
  
