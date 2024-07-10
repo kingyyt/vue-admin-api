@@ -27,13 +27,4 @@ RUN python manage.py migrate
 EXPOSE 8000
  
 # 运行Django开发服务器
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-# 使用多阶段构建，同时支持 HTTP 和 WebSocket
-FROM python:3.9-slim as http_server
-COPY --from=0 /app /app
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-FROM python:3.9-slim as websocket_server
-COPY --from=0 /app /app
-CMD ["daphne", "vue-admin-api.asgi:application"]
