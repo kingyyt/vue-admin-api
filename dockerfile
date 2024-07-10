@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # 安装依赖
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install -r requirements.txt
 
 # 暴露端口
 EXPOSE 8000
