@@ -43,4 +43,5 @@ pip3 install djangorestframework
 pip3 install channels
 pip3 install daphne
 
+<!-- redis依赖 数据库依赖 -->
 <!-- pip3 install channels_redis -->
