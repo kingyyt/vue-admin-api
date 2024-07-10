@@ -1,7 +1,16 @@
 version: "3"
 
 services:
-  web:
-    build: .
+  backend:
+    build: . # 使用当前目录下的 Dockerfile 构建镜像
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: sqlite:latest # 使用 SQLite 镜像
+    volumes:
+      - ./db.sqlite3:/db.sqlite3 # 将数据库文件挂载到容器中
