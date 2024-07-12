@@ -61,9 +61,10 @@ def copyPackage(subfolder,new_folder_name):
         content = ''
         pattern = r'// ?IF EDITOR[\s\S]*?// ?END EDITOR'
         patternScript = r'<script setup lang="ts">.*?<\/script>'
+        patternTypeScript = r'props\?\.'
         with open(f'buildCode/DoneCode/{new_folder_name}/src/{subfolder}/index.vue', 'r+',encoding="utf-8") as file:
             content = file.read()
-        processed_content = re.sub(patternScript, "\n", re.sub(pattern, "\n", content, flags=re.DOTALL), flags=re.DOTALL)
+        processed_content = re.sub(patternTypeScript,"props.",re.sub(patternScript, "\n", re.sub(pattern, "\n", content, flags=re.DOTALL), flags=re.DOTALL))
         
         with open(f'buildCode/DoneCode/{new_folder_name}/src/{subfolder}/index.vue', "w", encoding="utf-8") as file:
             file.write(processed_content)

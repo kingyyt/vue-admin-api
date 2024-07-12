@@ -19,7 +19,7 @@ def create_page(data_list,all_subfolders,new_folder_name):
                     importText = f"{importText}\n{currentImport}"
                     componentText = f"{componentText}\n{componentName},"
                 # 生成templateText文本
-                currentTemplateText = f'<{componentHTML} :props="{item["props"]}" />'
+                currentTemplateText = f'<{componentHTML} :props="{item["model"]}" />'
                 templateText = f"{templateText}\n{currentTemplateText}"
     build_template(new_folder_name,importText,templateText,componentText)
     

@@ -4,6 +4,8 @@
 
 # python3 manage.py runserver
 
+# python3 manage.py runserver 0.0.0.0:8000
+
 # python3 manage.py startapp web
 
 # python3 manage.py makemigrations

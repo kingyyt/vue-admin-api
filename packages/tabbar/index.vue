@@ -1,43 +1,43 @@
 <script lang="ts">
 export default {
-  name: 'tabbar',
-  id: 'tabbar',
+  name: "tabbar",
   // IF EDITOR
+  id: "tabbar",
   dataComponents: dataComponents,
   // END EDITOR
   props: {
     props: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      active: 0
-    }
+      active: 0,
+    };
   },
   watch: {
     props: {
       handler(newVal: any) {
-        this.active = this.props.active
+        this.active = this.props.active;
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     clickItem(e: number) {
-      this.active = this.props.active
-      this.$emit('clickItem', e)
-    }
-  }
-}
+      this.active = this.props.active;
+      this.$emit("clickItem", e);
+    },
+  },
+};
 </script>
 <script setup lang="ts">
 // IF EDITOR
-import dataComponents, { editorPropsData } from './data'
+import dataComponents, { editorPropsData } from "./data";
 defineExpose({
-  editorPropsData: editorPropsData()
-})
+  editorPropsData: editorPropsData(),
+});
 // END EDITOR
 </script>
 

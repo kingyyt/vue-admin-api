@@ -10,12 +10,17 @@ import zipfile
 from django.http import FileResponse
 from channels.layers import get_channel_layer
 
+class jsonListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.JsonInfo
+        fields = "__all__"
 
 
 class DownSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.BuildUniappFile
         fields = "__all__"
+
 class downUniappZipView(generics.CreateAPIView):
     queryset = models.BuildUniappFile.objects.all()
     authentication_classes = [JwtAuthView]
@@ -59,8 +64,13 @@ class downUniappView(generics.CreateAPIView):
         return user
     def post(self, request, *args, **kwargs):
         user_info = models.UserInfo.objects.get(id=self.get_queryset()) 
-        json_data = request.data["json"]
+        # json_data = request.data["json"]
+        id = request.data["id"]
+        # 获取json数据
+        json_info = models.JsonInfo.objects.filter(id=id) 
         # 获取请求体中的 JSON 数据
+        json_info_serializer = jsonListSerializers(json_info, many=True).data
+        json_data = json_info_serializer[0]["json"]
         channel_layer = get_channel_layer()
         try:
             # 将 JSON 字符串转换为 Python 对象（列表）
@@ -76,4 +86,4 @@ class downUniappView(generics.CreateAPIView):
         instance = models.BuildUniappFile.objects.create(user_id=user_info,filename=id)
         instance.save()
 
-        return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":id}},status=207)
+        return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":id},'json_info':json_data},status=207)
