@@ -5,7 +5,7 @@ import re
 from api.ext.buildUniappPage import create_page
 from asgiref.sync import async_to_sync
 
-def read_and_build_file(data_list,channel_layer):
+def read_and_build_file(data_list,channel_layer,data_tabbar):
     send_progress(channel_layer,1)
     # 定义源文件夹的路径
     source_folder = 'buildCode/uniCodeTemplate/uni-low-code'
@@ -34,10 +34,18 @@ def read_and_build_file(data_list,channel_layer):
                 # 根据id 复制组件
                 if(item['id'].split('-')[0] == subfolder.split('/')[-2]):
                     copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
-    
-    send_progress(channel_layer,80)
+    send_progress(channel_layer,50)
+    # 根据tabbar_data创建文件
+    if "isUseTabbar" in data_tabbar and data_tabbar['isUseTabbar']:
+        # 获取tabbar组件
+        tabbar_component = get_subfolders(folder_path)
+        for subfolder in tabbar_component:
+            # 根据id 复制组件
+            if('tabbar' == subfolder.split('/')[-2]):
+                copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
+    send_progress(channel_layer,60)
     # 创建page页面
-    create_page(data_list,all_subfolders,new_folder_name)
+    create_page(data_list,all_subfolders,new_folder_name,tabbar_component)
     send_progress(channel_layer,100)
 
     return new_folder_name

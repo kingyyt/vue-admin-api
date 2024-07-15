@@ -71,13 +71,19 @@ class downUniappView(generics.CreateAPIView):
         # 获取请求体中的 JSON 数据
         json_info_serializer = jsonListSerializers(json_info, many=True).data
         json_data = json_info_serializer[0]["json"]
+        # 判断tabbar是否存在
+        if "tabbars" in json_info_serializer[0]:
+            tabbars_data = json_info_serializer[0]["tabbars"]
+            data_tabbar = json.loads(tabbars_data)
+        else:
+            tabbars_data = {}
         channel_layer = get_channel_layer()
         try:
             # 将 JSON 字符串转换为 Python 对象（列表）
             data_list = json.loads(json_data)
             # # 获取WebSocket的channel_layer
             # 将data_list按需求引入相应代码
-            id = read_and_build_file(data_list,channel_layer)
+            id = read_and_build_file(data_list,channel_layer,data_tabbar)
 
         except json.JSONDecodeError:
             # 如果 JSON 解析失败，返回错误响应
@@ -86,4 +92,4 @@ class downUniappView(generics.CreateAPIView):
         instance = models.BuildUniappFile.objects.create(user_id=user_info,filename=id)
         instance.save()
 
-        return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":id},'json_info':json_data},status=207)
+        return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":id},'data_tabbar':data_tabbar},status=207)

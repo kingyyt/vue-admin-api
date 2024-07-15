@@ -3,7 +3,7 @@ import re
 import os
 
 # 创建page页面
-def create_page(data_list,all_subfolders,new_folder_name):
+def create_page(data_list,all_subfolders,new_folder_name,tabbar_component):
     importText = ''
     templateText = ''
     componentText = ''
@@ -21,6 +21,7 @@ def create_page(data_list,all_subfolders,new_folder_name):
                 # 生成templateText文本
                 currentTemplateText = f'<{componentHTML} :props="{item["model"]}" />'
                 templateText = f"{templateText}\n{currentTemplateText}"
+    
     build_template(new_folder_name,importText,templateText,componentText)
     
 # 拼接模版
