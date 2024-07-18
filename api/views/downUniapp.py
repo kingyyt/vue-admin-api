@@ -66,6 +66,8 @@ class downUniappView(generics.CreateAPIView):
         user_info = models.UserInfo.objects.get(id=self.get_queryset()) 
         # json_data = request.data["json"]
         id = request.data["id"]
+        # 0: 接口 1: 非接口
+        type = request.data["type"] 
         # 获取json数据
         json_info = models.JsonInfo.objects.filter(id=id) 
         # 获取请求体中的 JSON 数据
@@ -83,7 +85,7 @@ class downUniappView(generics.CreateAPIView):
             data_list = json.loads(json_data)
             # # 获取WebSocket的channel_layer
             # 将data_list按需求引入相应代码
-            id = read_and_build_file(data_list,channel_layer,data_tabbar)
+            id = read_and_build_file(data_list,channel_layer,data_tabbar,type)
 
         except json.JSONDecodeError:
             # 如果 JSON 解析失败，返回错误响应

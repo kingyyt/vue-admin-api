@@ -1,10 +1,6 @@
-<script lang="ts">
+<script lang="js">
+import { tabbarToPage } from "@/utils/toPage"
 export default {
-  name: "tabbar",
-  // IF EDITOR
-  id: "tabbar",
-  dataComponents: dataComponents,
-  // END EDITOR
   props: {
     props: {
       type: Object,
@@ -14,39 +10,37 @@ export default {
   data() {
     return {
       active: 0,
+      tabbars:null,
     };
   },
-  watch: {
-    props: {
-      handler(newVal: any) {
-        this.active = this.props.active;
-      },
-      deep: true,
-    },
+  mounted(){
+      this.active = this.props.active
+
   },
   methods: {
-    clickItem(e: number) {
-      this.active = this.props.active;
-      this.$emit("clickItem", e);
+    onChange(e) {
+      uni.redirectTo({url:tabbarToPage(this.props.tabbars[e.detail].name)})
+      uni.getStorage({
+        key: "storage_tabbars",
+        success: (res) => {
+          this.tabbars = res.data;
+          this.tabbars.tabbars.active = e.detail;
+          uni.setStorage({
+            key: "storage_tabbars",
+            data: this.tabbars,
+          });
+        },
+      });
     },
   },
 };
 </script>
-<script setup lang="ts">
-// IF EDITOR
-import dataComponents, { editorPropsData } from "./data";
-defineExpose({
-  editorPropsData: editorPropsData(),
-});
-// END EDITOR
-</script>
 
 <template>
   <div>
-    <van-tabbar v-model="active">
+    <van-tabbar :active="active" @change="onChange">
       <van-tabbar-item
-        @click="clickItem(index)"
-        v-for="(item, index) in props?.tabbars"
+        v-for="(item, index) in props.tabbars"
         :key="index"
         :icon="item.icon"
       >

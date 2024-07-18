@@ -5,7 +5,7 @@ import re
 from api.ext.buildUniappPage import create_page
 from asgiref.sync import async_to_sync
 
-def read_and_build_file(data_list,channel_layer,data_tabbar):
+def read_and_build_file(data_list,channel_layer,data_tabbar,type):
     send_progress(channel_layer,1)
     # 定义源文件夹的路径
     source_folder = 'buildCode/uniCodeTemplate/uni-low-code'

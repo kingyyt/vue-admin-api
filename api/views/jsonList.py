@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from api.ext.auth import JwtAuthView
+import json
 
 class jsonListSerializers(serializers.ModelSerializer):
     class Meta:
@@ -44,4 +45,32 @@ class uniJsonDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class=jsonListSerializers
     def get_queryset(self):
         id = self.kwargs['pk']
-        return models.JsonInfo.objects.filter(id=id)
+        data = models.JsonInfo.objects.filter(id=id)
+        serializer = jsonListSerializers(data, many=True).data[0]
+        serializer['json'] = json.loads(serializer.get('json'))
+        tabbars = []
+        # 判断tabbars是否存在
+        if serializer.get('tabbars'):
+            tabbars = json.loads(serializer.get('tabbars'))
+            if tabbars.get('isUseTabbar'):
+                # 获取tabbars的所有id
+                id_list = []
+                for item in range(len(tabbars.get('tabbars').get('tabbars'))):
+                    id_list.append(tabbars.get('tabbars').get('tabbars')[item].get('select'))
+
+                data_list = models.JsonInfo.objects.filter(id__in=id_list)
+                serializer_data_list = jsonListSerializers(data_list, many=True).data
+                # 根据tabbars 拼接页面数据
+                for tabbar in tabbars.get('tabbars').get('tabbars'):
+                    for select in serializer_data_list:
+                            if tabbar.get('select') == select.get('id'):
+                                # print(select['json'],'----')
+                                tabbar['json'] = json.loads(select['json'])
+                serializer['tabbars'] = tabbars
+        
+                
+        return serializer
+        
+        
+    def get(self, request, *args, **kwargs):
+        return Response({'code': 1000, 'msg': '获取成功', 'data': self.get_queryset()})
