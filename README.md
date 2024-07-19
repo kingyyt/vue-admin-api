@@ -44,6 +44,7 @@ pip3 install drf_yasg
 pip3 install djangorestframework
 pip3 install channels
 pip3 install daphne
+pip3 install requests
 
 <!-- redis依赖 数据库依赖 -->
 <!-- pip3 install channels_redis -->

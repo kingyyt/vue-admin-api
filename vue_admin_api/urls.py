@@ -38,7 +38,7 @@ urlpatterns = [
     path('api/jsonList/', jsonList.jsonListView.as_view()),
     path('api/jsonListDetail/<int:pk>/', jsonList.jsonDetailView.as_view()),
     path('api/demo/', demo.DemoView.as_view()),
-    path('api/uni/jsonListDetail/<int:pk>/', jsonList.uniJsonDetailView.as_view()),
+    path('api/uni/jsonListDetail/<int:pk>/', jsonList.uniJsonDetailView.as_view(),name='jsonListDetail'),
     # json处理
     path('api/buildCode/',downUniapp.downUniappView().as_view()),
     path('api/downUniappZip/',downUniapp.downUniappZipView().as_view()),

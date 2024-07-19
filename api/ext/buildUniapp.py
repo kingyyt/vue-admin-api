@@ -45,7 +45,7 @@ def read_and_build_file(data_list,channel_layer,data_tabbar,type):
                 copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
     send_progress(channel_layer,60)
     # 创建page页面
-    create_page(data_list,all_subfolders,new_folder_name,tabbar_component)
+    create_page(data_list,all_subfolders,new_folder_name,tabbar_component,type)
     send_progress(channel_layer,100)
 
     return new_folder_name

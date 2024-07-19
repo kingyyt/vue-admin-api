@@ -3,7 +3,7 @@ import re
 import os
 
 # 创建page页面
-def create_page(data_list,all_subfolders,new_folder_name,tabbar_component):
+def create_page(data_list,all_subfolders,new_folder_name,tabbar_component,type):
     importText = ''
     templateText = ''
     componentText = ''
