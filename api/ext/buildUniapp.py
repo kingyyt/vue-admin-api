@@ -5,7 +5,7 @@ import re
 from api.ext.buildUniappPage import create_page
 from asgiref.sync import async_to_sync
 
-def read_and_build_file(data_list,channel_layer,data_tabbar,type):
+def read_and_build_file(data_list,channel_layer,data_tabbar,type,id):
     send_progress(channel_layer,1)
     # 定义源文件夹的路径
     source_folder = 'buildCode/uniCodeTemplate/uni-low-code'
@@ -24,16 +24,7 @@ def read_and_build_file(data_list,channel_layer,data_tabbar,type):
     shutil.copytree(source_folder, target_folder)
     send_progress(channel_layer,30)
 
-    # 根据 json id 获取组件
-    all_subfolders = []
-    for item in data_list:
-        if(item['id'].split('-')[0]):
-            # 获取所有子文件夹
-            all_subfolders = get_subfolders(folder_path)
-            for subfolder in all_subfolders:
-                # 根据id 复制组件
-                if(item['id'].split('-')[0] == subfolder.split('/')[-2]):
-                    copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
+
     send_progress(channel_layer,50)
     # 根据tabbar_data创建文件
     if "isUseTabbar" in data_tabbar and data_tabbar['isUseTabbar']:
@@ -43,9 +34,33 @@ def read_and_build_file(data_list,channel_layer,data_tabbar,type):
             # 根据id 复制组件
             if('tabbar' == subfolder.split('/')[-2]):
                 copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
+        for i in data_tabbar['tabbars']['tabbars']:
+            all_subfolders = []
+            for item in i['json']:
+                if(item['id'].split('-')[0]):
+                    # 获取所有子文件夹
+                    all_subfolders = get_subfolders(folder_path)
+                    for subfolder in all_subfolders:
+                        # 根据id 复制组件
+                        if(item['id'].split('-')[0] == subfolder.split('/')[-2]):
+                            copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
+
+    else:
+        # 根据 json id 获取组件 如果 data_tabbar 存在 则根据data_tabbar获取组件
+        all_subfolders = []
+        for item in data_list:
+            if(item['id'].split('-')[0]):
+                # 获取所有子文件夹
+                all_subfolders = get_subfolders(folder_path)
+                for subfolder in all_subfolders:
+                    # 根据id 复制组件
+                    if(item['id'].split('-')[0] == subfolder.split('/')[-2]):
+                        copyPackage(subfolder.replace("/index.vue", ""),new_folder_name)
+
+
     send_progress(channel_layer,60)
     # 创建page页面
-    create_page(data_list,all_subfolders,new_folder_name,tabbar_component,type)
+    create_page(data_list,all_subfolders,new_folder_name,data_tabbar,type,id)
     send_progress(channel_layer,100)
 
     return new_folder_name

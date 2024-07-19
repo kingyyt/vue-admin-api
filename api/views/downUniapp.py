@@ -9,6 +9,7 @@ import os
 import zipfile
 from django.http import FileResponse
 from channels.layers import get_channel_layer
+from api.views.jsonList import uniJsonDetailView
 
 class jsonListSerializers(serializers.ModelSerializer):
     class Meta:
@@ -58,6 +59,7 @@ class downUniappView(generics.CreateAPIView):
     queryset = models.BuildUniappFile.objects.all()
     authentication_classes = [JwtAuthView]
     serializer_class = DownSerializers
+    uniJsonDetailViewData = uniJsonDetailView.as_view()
     def get_queryset(self):
         payload, token = self.request.successful_authenticator.authenticate(self.request)
         user = payload['user_id']
@@ -74,9 +76,21 @@ class downUniappView(generics.CreateAPIView):
         json_info_serializer = jsonListSerializers(json_info, many=True).data
         json_data = json_info_serializer[0]["json"]
         # 判断tabbar是否存在
-        if "tabbars" in json_info_serializer[0]:
+        data_tabbar = {}
+        if "tabbars" in json_info_serializer[0] and json_info_serializer[0]["tabbars"]:
             tabbars_data = json_info_serializer[0]["tabbars"]
             data_tabbar = json.loads(tabbars_data)
+            # 获取tabbars的所有id
+            id_list = []       
+            for i in data_tabbar['tabbars']['tabbars']:
+                id_list.append(i['select'])
+            data_list = models.JsonInfo.objects.filter(id__in=id_list)
+            serializers_data_list = jsonListSerializers(data_list, many=True).data
+            # 拼接tabbars数据
+            for i in data_tabbar['tabbars']['tabbars']:
+                for j in serializers_data_list:
+                   if i['select'] == j['id']:
+                       i['json'] = json.loads(j['json']) 
         else:
             tabbars_data = {}
         channel_layer = get_channel_layer()
@@ -85,13 +99,13 @@ class downUniappView(generics.CreateAPIView):
             data_list = json.loads(json_data)
             # # 获取WebSocket的channel_layer
             # 将data_list按需求引入相应代码
-            id = read_and_build_file(data_list,channel_layer,data_tabbar,type)
+            idfile = read_and_build_file(data_list,channel_layer,data_tabbar,type,id)
 
         except json.JSONDecodeError:
             # 如果 JSON 解析失败，返回错误响应
             return Response({"error": "Invalid JSON data"}, status=400)
 
-        instance = models.BuildUniappFile.objects.create(user_id=user_info,filename=id)
+        instance = models.BuildUniappFile.objects.create(user_id=user_info,filename=idfile)
         instance.save()
 
-        return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":id},'data_tabbar':data_tabbar},status=207)
+        return Response({'code': 1000, 'msg': '打包成功', 'name': {"id":idfile},'data_tabbar':data_tabbar},status=207)

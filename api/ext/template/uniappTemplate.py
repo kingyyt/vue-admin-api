@@ -18,8 +18,13 @@ export default {
       {{ data }}
     };
   },
-  onLoad() {},
-  methods: {},
+  async onLoad() {
+    {{ onLoad }}
+  },
+  methods: {
+    {{ methods }}
+  }
+  },
 };
 
 
@@ -38,17 +43,7 @@ export const tabbarToPage = (page) => {
 
  """
 
-pagesJson = """
-{
-  "pages": [
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationBarTitleText": "首页"
-      }
-    },
-  ],
-
+pagesJson = {
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -62,4 +57,50 @@ pagesJson = """
   }
 }
 
+appVue = """
+<script>
+import { GetJsonListDetail } from "@/api/index";
+export default {
+  onLaunch: function () {
+    this.init();
+    this.getData();
+  },
+  methods: {
+    init() {
+      uni.removeStorage({
+        key: "storage_data",
+      });
+    },
+    async getData() {
+      const res = await GetJsonListDetail({{ id }});
+      console.log(res.data);
+      uni.setStorage({
+        key: "storage_data",
+        data: res.data,
+      });
+      this.$isResolve();
+    },
+  },
+};
+</script>
+
+<style>
+/*每个页面公共css */
+@import "@/wxcomponents/vant-weapp/common/index.wxss";
+
+.van-tabbar {
+  position: fixed;
+  bottom: 0;
+}
+</style>
+"""
+
+toPage = """
+export const tabbarToPage = (page) => {
+  switch (page) {
+    {{ toPage }}
+    default:
+      return "/pages/index/tabbar0";
+  }
+};
 """
