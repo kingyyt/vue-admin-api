@@ -55,10 +55,10 @@ def create_pages_json(data,tabbar_type,new_folder_name):
         pages_json['pages'].append({
             "path":f"pages/index/index",
             "style":{
-                "navigationBarTitleText":data['json']['name']
+                "navigationBarTitleText":data['name']
             }
         })
-        create_single_page(data,f'{create_url}/index.vue',0,tabbar_type)
+        create_single_page(data['json'],f'{create_url}/index.vue',0,tabbar_type)
     # writeFile(url,pages_json)
 
     with open(url, "w", encoding="utf-8") as f:

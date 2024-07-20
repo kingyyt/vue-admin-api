@@ -48,7 +48,7 @@ def read_and_build_file(data_list,channel_layer,data_tabbar,type,id):
     else:
         # 根据 json id 获取组件 如果 data_tabbar 存在 则根据data_tabbar获取组件
         all_subfolders = []
-        for item in data_list:
+        for item in data_list['json']:
             if(item['id'].split('-')[0]):
                 # 获取所有子文件夹
                 all_subfolders = get_subfolders(folder_path)

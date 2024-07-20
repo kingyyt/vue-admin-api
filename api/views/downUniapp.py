@@ -96,7 +96,8 @@ class downUniappView(generics.CreateAPIView):
         channel_layer = get_channel_layer()
         try:
             # 将 JSON 字符串转换为 Python 对象（列表）
-            data_list = json.loads(json_data)
+            data_list = json_info_serializer[0]
+            data_list['json'] = json.loads(data_list['json'])
             # # 获取WebSocket的channel_layer
             # 将data_list按需求引入相应代码
             idfile = read_and_build_file(data_list,channel_layer,data_tabbar,type,id)
