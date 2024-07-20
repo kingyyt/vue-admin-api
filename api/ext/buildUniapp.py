@@ -60,7 +60,7 @@ def read_and_build_file(data_list,channel_layer,data_tabbar,type,id):
 
     send_progress(channel_layer,60)
     # 创建page页面
-    create_page(data_list,all_subfolders,new_folder_name,data_tabbar,type,id)
+    create_page(data_list,new_folder_name,data_tabbar,type,id)
     send_progress(channel_layer,100)
 
     return new_folder_name

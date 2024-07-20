@@ -1,6 +1,6 @@
 template = """
 <template>
-  <view class="content">
+  <view v-if="tabbars" class="content">
     {{ template }}
   </view>
 </template>
@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     {{ methods }}
-  }
   },
 };
 
@@ -103,4 +102,30 @@ export const tabbarToPage = (page) => {
       return "/pages/index/tabbar0";
   }
 };
+"""
+
+onLoad = """
+    await this.$onLaunched;
+    this.getTabbarsValue();
+"""
+
+methods = """
+    getTabbarsValue() {
+      uni.getStorage({
+        key: "storage_data",
+        success: (res) => {
+          this.tabbars = res.data.tabbars;
+        },
+      });
+    },
+"""
+methodsNoTabbar = """
+    getTabbarsValue() {
+      uni.getStorage({
+        key: "storage_data",
+        success: (res) => {
+          this.tabbars = res.data.json;
+        },
+      });
+    },
 """
