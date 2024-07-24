@@ -30,8 +30,13 @@ def writeFile(file_path, content):
 
 def create_pages_json(data,tabbar_type,new_folder_name):
     url = f'buildCode/DoneCode/{new_folder_name}/src/pages.json'
+    try:
     # 清空文件夹
-    shutil.rmtree(f'buildCode/DoneCode/{new_folder_name}/src/pages/index')
+        shutil.rmtree(f'buildCode/DoneCode/{new_folder_name}/src/pages/index')        
+    except Exception as e:
+            # 处理异常，例如记录日志或返回错误信息给用户
+        pass
+    
     # 创建文件夹
     create_url = f'buildCode/DoneCode/{new_folder_name}/src/pages/index'
     os.makedirs(create_url)

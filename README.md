@@ -46,5 +46,7 @@ pip3 install channels
 pip3 install daphne
 pip3 install requests
 
+<!-- pip3 install shutil -->
+
 <!-- redis依赖 数据库依赖 -->
 <!-- pip3 install channels_redis -->
